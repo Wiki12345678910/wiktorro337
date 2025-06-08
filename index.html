@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wiktorro – Grafik Kreatywny i Gry</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    .card:hover {
+      transform: scale(1.03);
+      transition: 0.3s;
+    }
+    .btn {
+      background-color: #16a34a; /* Tailwind green-600 */
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: inline-block;
+      user-select: none;
+    }
+    .btn:hover {
+      background-color: #15803d; /* Tailwind green-700 */
+      box-shadow: 0 0 8px #15803d;
+    }
+    #cart {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    /* Animacja dla listy gier */
+    #gameList {
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+    }
+    #gameList.show {
+      max-height: 500px;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+  <header class="bg-gradient-to-r from-green-600 to-emerald-500 text-white text-center py-24 px-6">
+    <h1 class="text-5xl font-extrabold">Wiktorro</h1>
+    <p class="mt-4 text-xl">Nowoczesna grafika. Minimalistyczny styl. Realne efekty.</p>
+  </header>
+
+  <section class="max-w-6xl mx-auto py-16 px-6 grid md:grid-cols-2 gap-10 items-center" data-aos="fade-up">
+    <div>
+      <h2 class="text-3xl font-bold text-green-600 mb-4">👋 Kim jestem?</h2>
+      <p>Grafik specjalizujący się w prostym, estetycznym designie. Pomagam wyróżniać się małym firmom, markom i osobom prywatnym.</p>
+      <p class="mt-4">Minimalizm + charakter = skuteczna komunikacja wizualna. Właśnie tak pracuję.</p>
+    </div>
+    <img src="https://via.placeholder.com/500x350?text=Twoje+zdjecie+lub+projekt" alt="o mnie" class="rounded-xl shadow-lg" />
+  </section>
+
+  <section class="bg-gray-50 py-20 px-6" data-aos="fade-up">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-green-600 mb-8">🎯 Co oferuję?</h2>
+      <div class="grid md:grid-cols-4 gap-6 text-left">
+        <div>
+          <h3 class="font-semibold text-lg mb-2">🔰 Logo i identyfikacja</h3>
+          <p>Proste i zapadające w pamięć znaki graficzne.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-2">📱 Grafiki do social mediów</h3>
+          <p>Estetyczne posty, story, bannery. Skrojone na Twoją markę.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-2">🖌️ Ilustracje wektorowe</h3>
+          <p>Ikonki, rysunki, grafiki – lekkie, czyste i uniwersalne.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-2">📄 Plakaty i ulotki</h3>
+          <p>Dla druku i do internetu. Wyraziste i dobrze zaprojektowane.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-6" data-aos="fade-up">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-green-600 mb-10">💼 Pakiety graficzne</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Pakiety graficzne -->
+        <form class="bg-white p-8 rounded-2xl shadow-lg card" onsubmit="addToCart('Pakiet Start', 60); return false;">
+          <h3 class="text-xl font-bold text-green-600 mb-2">Start</h3>
+          <p class="mb-4">Dla początkujących, którzy chcą wystartować ze swoją marką.</p>
+          <ul class="text-sm text-left list-disc list-inside mb-6">
+            <li>Logo</li>
+            <li>2 grafiki do social mediów</li>
+            <li>1 poprawka</li>
+          </ul>
+          <p class="text-xl font-bold mb-4">60 zł</p>
+          <button type="submit" class="btn w-full">Kup teraz</button>
+        </form>
+
+        <form class="bg-green-50 p-8 rounded-2xl shadow-lg border-2 border-green-600 card" onsubmit="addToCart('Pakiet Biznes', 90); return false;">
+          <h3 class="text-xl font-bold text-green-600 mb-2">Biznes</h3>
+          <p class="mb-4">Dla firm, które potrzebują spójnej identyfikacji wizualnej.</p>
+          <ul class="text-sm text-left list-disc list-inside mb-6">
+            <li>Logo + kolorystyka + fonty</li>
+            <li>6 grafik do social mediów</li>
+            <li>2 poprawki</li>
+          </ul>
+          <p class="text-xl font-bold mb-4">90 zł</p>
+          <button type="submit" class="btn w-full">Kup teraz</button>
+        </form>
+
+        <form class="bg-white p-8 rounded-2xl shadow-lg card" onsubmit="addToCart('Pakiet Pro+', 100); return false;">
+          <h3 class="text-xl font-bold text-green-600 mb-2">Pro+</h3>
+          <p class="mb-4">Dla wymagających klientów z większym zakresem projektu.</p>
+          <ul class="text-sm text-left list-disc list-inside mb-6">
+            <li>Kompletna identyfikacja</li>
+            <li>10 grafik + 2 plakaty</li>
+            <li>3 poprawki + konsultacje</li>
+          </ul>
+          <p class="text-xl font-bold mb-4">100 zł</p>
+          <button type="submit" class="btn w-full">Kup teraz</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-6 bg-gray-100" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-green-600 mb-10">🎮 Pakiety z grami</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- Przykładowa pojedyncza gra -->
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('📒・poradnik-na-gry', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">📒・poradnik-na-gry</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🔑・the-forest', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🔑・the-forest</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('📊・need-for-speed', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">📊・need-for-speed</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('💿・sleeping-dog', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">💿・sleeping-dog</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🌱・schedule-1', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🌱・schedule-1</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🚌・euro-track-2', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🚌・euro-track-2</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🕷️・spider-man-2', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🕷️・spider-man-2</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🚜・farming-simulator-25', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🚜・farming-simulator-25</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🚦・gta-5', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🚦・gta-5</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('👻・phasmofofia', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">👻・phasmofofia</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('⚽・fc-25', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">⚽・fc-25</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <form class="bg-white p-6 rounded-xl shadow-lg card" onsubmit="addToCart('🏎️・forza-horizon-5', 5); return false;">
+          <h3 class="text-xl font-bold text-green-700">🏎️・forza-horizon-5</h3>
+          <p class="mt-2">5 zł</p>
+          <button type="submit" class="btn mt-4 w-full">Kup</button>
+        </form>
+
+        <!-- Zestaw 3 Gier z kwadracikiem "Gry za 5 zł" -->
+        <div class="bg-green-50 p-6 rounded-xl shadow-lg border-2 border-green-600 card text-left">
+          <h3 class="text-xl font-bold text-green-800 mb-2">Zestaw 3 Gier — 20 zł</h3>
+          <p>Wszystkie poniższe gry w pakiecie:</p>
+
+          <!-- Kwadracik do kliknięcia -->
+          <button id="toggleGameBox" type="button"
+            class="inline-block bg-green-600 text-white font-bold px-4 py-2 rounded cursor-pointer hover:bg-green-700 transition select-none mt-4">
+            Gry za 5 zł
+          </button>
+
+          <!-- Ukryta lista gier -->
+          <ul id="gameList" class="mt-4 text-left list-disc list-inside max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out">
+            <li>📒・poradnik-na-gry</li>
+            <li>🔑・the-forest</li>
+            <li>📊・need-for-speed</li>
+            <li>💿・sleeping-dog</li>
+            <li>🌱・schedule-1</li>
+            <li>🚌・euro-track-2</li>
+            <li>🕷️・spider-man-2</li>
+            <li>🚜・farming-simulator-25</li>
+            <li>🚦・gta-5</li>
+            <li>👻・phasmofofia</li>
+            <li>⚽・fc-25</li>
+            <li>🏎️・forza-horizon-5</li>
+          </ul>
+
+          <form onsubmit="addToCart('Zestaw 3 Gier', 20); return false;">
+            <button type="submit" class="btn mt-4 w-full">Kup zestaw</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Koszyk -->
+  <section class="fixed top-16 right-6 w-80 bg-white border-2 border-green-600 rounded-xl shadow-lg p-6 z-50 max-h-[60vh] overflow-y-auto">
+    <h3 class="text-xl font-bold text-green-700 mb-4">🛒 Twój koszyk</h3>
+    <ul id="cart" class="mb-4 text-left space-y-2">
+      <li class="text-gray-500">Koszyk jest pusty.</li>
+    </ul>
+    <div class="text-right">
+      <button id="buyButton" class="btn w-full hidden"
+        onclick="window.open('https://discord.gg/UsuKaDbM', '_blank')">
+        Kup teraz
+      </button>
+    </div>
+  </section>
+
+  <!-- Opinie -->
+  <section class="max-w-4xl mx-auto py-16 px-6 text-center" data-aos="fade-up">
+    <h2 class="text-3xl font-bold text-green-600 mb-10">💬 Opinie klientów</h2>
+    <div class="space-y-6">
+      <blockquote class="italic text-gray-700">"Super współpraca, świetne projekty! Polecam każdemu, kto szuka profesjonalizmu i stylu." – Anna K.</blockquote>
+      <blockquote class="italic text-gray-700">"Wiktorro to prawdziwy mistrz minimalizmu. Grafiki przyciągają uwagę i robią robotę!" – Michał S.</blockquote>
+      <blockquote class="italic text-gray-700">"Dzięki niemu moja marka zyskała nowy, świeży wygląd. Mega polecam!" – Kasia W.</blockquote>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Koszyk
+    let cart = [];
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartEl = document.getElementById('cart');
+      const buyBtn = document.getElementById('buyButton');
+
+      if (cart.length === 0) {
+        cartEl.innerHTML = '<li class="text-gray-500">Koszyk jest pusty.</li>';
+        buyBtn.classList.add('hidden');
+      } else {
+        cartEl.innerHTML = '';
+        cart.forEach((item, i) => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} – ${item.price} zł`;
+          li.classList.add('flex', 'justify-between', 'items-center');
+          
+          // Dodaj przycisk usuwania
+          const delBtn = document.createElement('button');
+          delBtn.textContent = '❌';
+          delBtn.classList.add('ml-4', 'text-red-600', 'hover:text-red-900', 'cursor-pointer', 'text-lg');
+          delBtn.onclick = () => {
+            cart.splice(i, 1);
+            renderCart();
+          };
+          li.appendChild(delBtn);
+
+          cartEl.appendChild(li);
+        });
+        buyBtn.classList.remove('hidden');
+      }
+    }
+
+    // Toggle lista gier w zestawie
+    const toggleGameBox = document.getElementById('toggleGameBox');
+    const gameList = document.getElementById('gameList');
+
+    toggleGameBox.addEventListener('click', () => {
+      if (gameList.classList.contains('show')) {
+        gameList.classList.remove('show');
+        toggleGameBox.textContent = 'Gry za 5 zł';
+      } else {
+        gameList.classList.add('show');
+        toggleGameBox.textContent = 'Ukryj gry za 5 zł';
+      }
+    });
+
+    // Initial render koszyka
+    renderCart();
+  </script>
+</body>
+</html>
